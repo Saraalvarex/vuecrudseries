@@ -1,0 +1,62 @@
+<template>
+ <div>
+    <nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">👽</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <router-link class="nav-link" to="/">Series</router-link>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/insert">Nuevo personaje</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/modify">Modificar personaje</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Series
+          </a>
+          <ul class="dropdown-menu">
+            <li v-for="serie in series" :key="serie" :value="serie">
+                <router-link class="dropdown-item" :to="'/serie/'+serie.idSerie">{{serie.nombre}}</router-link>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+ </div>
+</template>
+
+<script>
+import ServiceSeries from './../services/ServiceSeries';
+const service = new ServiceSeries();
+
+export default {
+ name: 'MenuComponent',
+ data() {
+ return {
+    series: null, status: false
+ };
+ },
+ methods: {
+
+ },
+ mounted(){
+    service.getSeries().then(result=>{
+        this.series=result;
+        this.status=true;
+    })
+ }
+};
+</script>
+
+<style scoped>
+
+</style>
