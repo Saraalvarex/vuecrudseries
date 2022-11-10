@@ -1,5 +1,9 @@
 <template>
  <div style="width: 500px; margin: 0 auto">
+    <router-link to="/" class="btn btn-warning">
+        <span aria-hidden="true">&larr;</span> Back
+   </router-link>
+   <br/><br/>
     <h1>Inserta un personaje</h1>
     <h3 style="color: red">{{mensaje}}</h3>
     <form method="post" v-on:submit.prevent="insertarPersonaje()">

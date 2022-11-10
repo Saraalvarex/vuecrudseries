@@ -53,11 +53,19 @@ export default class ServiceSeries {
             })
         });
     }
+    getPersonaje(idpersonaje){
+        return new Promise(function(resolve){
+            var request = 'api/personajes/'+idpersonaje
+            var url = Global.url+request
+            axios.get(url).then(res => {
+                resolve(res.data)
+            })
+        })
+    }
     updatePersonaje(idpersonaje, idserie){
         return new Promise(function(resolve){
             var request = 'api/Personajes/'+idpersonaje+'/'+idserie
             var url = Global.url+request;
-            console.log(url)
             axios.put(url).then(res=> {
                 resolve(res)
             })

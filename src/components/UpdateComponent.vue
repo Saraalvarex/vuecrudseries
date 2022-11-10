@@ -1,6 +1,10 @@
 <template>
+    <router-link to="/" class="btn btn-warning">
+        <span aria-hidden="true">&larr;</span> Back
+    </router-link>
+   <br/><br/>
     <h1>Update</h1>
- <div style="width: 500px; margin: 0 auto">
+ <div style="width: 270px; margin: 0 auto">
     <form method="post" v-on:submit.prevent="modifyPersonaje()">
         <label>Personajes: </label>
         <select class="form-select" aria-label="Default select example" v-model="idpersonaje">
@@ -14,7 +18,36 @@
         </select><br/>
         <button class="btn btn-success">Modificar</button>
     </form>
+    <br/>
  </div>
+ <div class="container">
+     <!-- Si se ha modificado correctamente pinto -->
+    <div class="justify-content-center align-items-center" style="width: 50%" v-if="statusModif==true">
+    <!-- Pinto serie y personaje -->
+    <table class="table table-dark table-hover table-bordered border-warning">    
+    <thead>
+        <tr>
+            <th class="table table-warning" colspan="2">Serie</th>
+            <th class="table table-warning" colspan="2">Personaje</th>
+        </tr>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Imagen</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Imagen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">{{serie.nombre}}</th>
+            <td><img style="width: 200px" :src="serie.imagen"/></td>
+            <th scope="row">{{personaje.nombre}}</th>
+            <td><img style="width: 150px" :src="personaje.imagen"/></td>
+        </tr>
+    </tbody>
+    </table>
+    </div>
+</div>
 </template>
 
 <script>
@@ -25,7 +58,14 @@ export default {
  name: 'UpdateComponent',
  data() {
     return {
-        personajes: null, series: null, idpersonaje: 0, idserie: 0
+        personajes: null,
+        series: null,
+        idpersonaje: 1,
+        idserie: 1,
+        serie: {},
+        personaje: {},
+        status: false,
+        statusModif: false
     }
  },
  mounted(){
@@ -42,7 +82,14 @@ export default {
     modifyPersonaje(){
         service.updatePersonaje(this.idpersonaje, this.idserie).then(result => {
             console.log(result);
-            this.$router.push("/personajes/"+this.idserie)
+            // this.$router.push("/personajes/"+this.idserie)
+            service.getSerie(this.idserie).then(resu =>{
+                this.serie=resu;
+                this.statusModif=true;
+            })
+            service.getPersonaje(this.idpersonaje).then(resu => {
+                this.personaje=resu;
+            })
         });
     }
  }
@@ -50,5 +97,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
