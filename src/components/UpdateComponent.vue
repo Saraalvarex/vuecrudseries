@@ -60,7 +60,7 @@ export default {
     return {
         personajes: null,
         series: null,
-        idpersonaje: 1,
+        idpersonaje: 9,
         idserie: 1,
         serie: {},
         personaje: {},
